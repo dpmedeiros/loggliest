@@ -50,7 +50,22 @@ Loggly.with(this, TOKEN)
 By default, each message gets the app's package name as its Loggly tag, but this can be changed by setting the `tag(String logglyTag)` on the `Builder`.
 
 **NOTE:** Short upload intervals will have a negative effect on the battery life. You want to carefully configure the upload settings and limit the amount of data you log in production settings so as to limit the impact on battery life and network data usage your logging causes.
- 
+
+
+## OkHttp
+This version of Loggliest uses Retrofit2 with OkHttp 3 for REST communications with Loggly.  You can specify a custom OkHttp instance to use in the `Builder`.  For example, to specify an OkHttp instance that uses a read and connection timeout of 1 minute, you might do:
+
+```java
+Loggly.with(this, TOKEN)
+    .okHttpClient(new OkHttpClient.Builder()
+                      .readTimeout(1, TimeUnit.MINUTES)
+                      .connectTimeout(1, TimeUnit.MINUTES)
+                      .build())
+   .init();
+```
+
+If no OkHttp instance is specified, Loggliest will create one with standard OkHttp defaults.
+
 ## License
 ```
 Licensed under the Apache License, Version 2.0 (the "License");
